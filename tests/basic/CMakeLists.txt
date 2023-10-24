@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.21)
+add_executable(basic_test basic_test.cc)
+target_link_libraries(basic_test PUBLIC ${PROJECT_NAME})
+target_include_directories(basic_test PUBLIC ${PROJECT_BINARY_DIR}/include)
+add_test(basic_test basic_test)

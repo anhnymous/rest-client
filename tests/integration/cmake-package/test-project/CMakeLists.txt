@@ -1,0 +1,65 @@
+cmake_minimum_required(VERSION 3.21)
+project(test-project VERSION 1.0.0 LANGUAGES C CXX DESCRIPTION "Test rest-client lib")
+message(STATUS "PROJECT_NAME: ${PROJECT_NAME}")
+message(STATUS "PROJECT_VERSION: ${PROJECT_VERSION}")
+
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_CXX_STANDARD 17)
+set(POSITION_INDEPENDENT_CODE ON)
+option(DEBUG "Build `${PROJECT_NAME}` optimized for GDB debugging" OFF)
+if(DEBUG)
+  message(STATUS "[${PROJECT_NAME}] DEBUG build enabled")
+  set(CMAKE_BUILD_TYPE "Debug")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0 -ggdb3")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -ggdb3")
+else()
+  message(STATUS "[${PROJECT_NAME}] RELEASE build enabled")
+  set(CMAKE_BUILD_TYPE "Release")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftree-vectorize")
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  message(STATUS "[${PROJECT_NAME}] CMAKE_BUILD_TYPE is Debug")
+else()
+  message(STATUS "[${PROJECT_NAME}] CMAKE_BUILD_TYPE is Release")
+endif()
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++17")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wfloat-equal")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wduplicated-cond")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wformat-security")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wdouble-promotion")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_FORTIFY_SOURCE=2")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wlogical-not-parentheses")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE -Wextra -Wall -Werror")
+
+include(ExternalProject)
+include(CheckIncludeFile)
+include(CheckIncludeFiles)
+include(CheckIncludeFileCXX)
+include(third-party/rest-client/rest_client.cmake)
+add_subdirectory(third-party)
+find_library(RESTCLIENT_LIBS
+  NAMES rest_client
+  HINTS ${LIBRC_LIBRARY_DIR}
+  NO_CACHE
+  #REQUIRED
+  NO_DEFAULT_PATH
+  NO_CMAKE_SYSTEM_PATH
+)
+if(RESTCLIENT_LIBS_FOUND)
+  message(STATUS "[${PROJECT_NAME}] Found lib rest_client at: ${RESTCLIENT_LIBS}")
+else()
+  set(RESTCLIENT_LIBS "rest_client")
+endif()
+if(HAVE_RESTCLIENT)
+  message(STATUS "[${PROJECT_NAME}] RESTCLIENT_LIBS  : ${RESTCLIENT_LIBS}")
+  message(STATUS "[${PROJECT_NAME}] LIBRC_LIBRARY_DIR: ${LIBRC_LIBRARY_DIR}")
+  message(STATUS "[${PROJECT_NAME}] LIBRC_INCLUDE_DIR: ${LIBRC_INCLUDE_DIR}")
+endif()
+
+set(SRC_FILES ${PROJECT_SOURCE_DIR}/src/test_project.cc)
+add_executable(${PROJECT_NAME} ${SRC_FILES})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${RESTCLIENT_LIBS})
+target_include_directories(${PROJECT_NAME} PRIVATE ${LIBRC_INCLUDE_DIR})
+add_dependencies(${PROJECT_NAME} ${LIBRC_PREFIX})

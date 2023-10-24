@@ -1,0 +1,9 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
+libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
+
+Name: @PROJECT_NAME@
+Description: Anh Tran's simple REST client library implemented in C/C++ and libcurl.
+Version: @PROJECT_VERSION@
+Libs: -L${libdir} -lrest_client
+Cflags: -I${includedir}
