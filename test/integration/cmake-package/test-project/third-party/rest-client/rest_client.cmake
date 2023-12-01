@@ -1,7 +1,7 @@
 set(LIBRC_PREFIX      restclient010)
 set(LIBRC_GIT_REPO    "git@github-anhnymous:anhnymous/rest-client.git")
 set(LIBRC_GIT_TAG     "")
-set(LIBRC_GIT_COMMIT  "708de7785697e35ecf1692b28f4e7e5ec9fa87f0")
+set(LIBRC_GIT_COMMIT  "b6f54fcb082d4ee3008c65ebdd51a3181585ac23")
 
 set(LIBRC_TOP_DIR ${PROJECT_BINARY_DIR}/${LIBRC_PREFIX})
 set(LIBRC_DOWNLOAD_DIR ${LIBRC_TOP_DIR}/src)

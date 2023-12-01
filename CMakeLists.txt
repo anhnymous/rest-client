@@ -96,10 +96,10 @@ include(ExternalProject)
 include(CheckIncludeFile)
 include(CheckIncludeFiles)
 include(CheckIncludeFileCXX)
-include(dependencies/curl/curl.cmake)
-include(dependencies/nlohmann-json/nlohmann_json.cmake)
+include(third-party/curl/curl.cmake)
+include(third-party/nlohmann-json/nlohmann_json.cmake)
 
-add_subdirectory(dependencies)
+add_subdirectory(third-party)
 
 find_library(CURL_LIBS
   NAMES curl libcurl
@@ -162,7 +162,7 @@ option(TESTING "Build tests." OFF)
 if(TESTING)
   include(CTest)
   enable_testing()
-  add_subdirectory(tests/basic)
+  add_subdirectory(test/basic)
 endif()
 
 add_custom_target("uninstall" COMMENT "Uninstall installed files")
