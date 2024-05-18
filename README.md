@@ -47,6 +47,6 @@ sudo make install
 
 ## Core CMake build options
   * CMAKE_INSTALL_PREFIX: specify your desired installation path for `rest-client`
-  * DEBUG: ON | OFF (default), enable DEBUG build 
+  * DEBUG: ON | OFF (default), enable DEBUG build
   * SHARED_LIB: ON | OFF (default), build as shared or static library
   * TESTING: ON | OFF (default), build testings

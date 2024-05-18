@@ -113,6 +113,7 @@ if(CURL_LIBS_FOUND)
 else()
   set(CURL_LIBS "curl")
 endif()
+
 if(HAVE_CURL)
   message(STATUS "[${PROJECT_NAME}] CURL_LIBS          : ${CURL_LIBS}")
   message(STATUS "[${PROJECT_NAME}] LIBCURL_LIBRARY_DIR: ${LIBCURL_LIBRARY_DIR}")

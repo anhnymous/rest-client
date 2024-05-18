@@ -68,17 +68,18 @@ message(STATUS "[${LIBCURL_PREFIX}] Release build dir  : ${LIBCURL_RELEASE_BUILD
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
   set(LIBCURL_LIBRARY_DIR ${BINARY_DIR}/lib/.libs/)
   message(STATUS "[${LIBCURL_PREFIX}] LIBCURL_LIBRARY_DIR: ${LIBCURL_LIBRARY_DIR}")
-  message(STATUS "[${LIBCURL_PREFIX}] ${LIBCURL_PREFIX} Debug build type")
+  message(STATUS "[${LIBCURL_PREFIX}] ${LIBCURL_PREFIX} build type: Debug")
 else()
   set(LIBCURL_LIBRARY_DIR ${BINARY_DIR}/lib/.libs/)
   message(STATUS "[${LIBCURL_PREFIX}] LIBCURL_LIBRARY_DIR: ${LIBCURL_LIBRARY_DIR}")
-  message(STATUS "[${LIBCURL_PREFIX}] ${LIBCURL_PREFIX} Release build type")
+  message(STATUS "[${LIBCURL_PREFIX}] ${LIBCURL_PREFIX} build type: Release")
 endif()
 
 set(CMAKE_REQUIRED_INCLUDES_SAVE ${CMAKE_REQUIRED_INCLUDES})
 set(CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES} ${LIBCURL_INCLUDE_DIR})
 check_include_file_cxx("curl/curl.h" HAVE_CURL)
 set(CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES_SAVE})
+
 if(NOT HAVE_CURL)
   message(STATUS "Did not build libcurl correctly as cannot find curl.h")
   set(HAVE_CURL 1)
@@ -90,3 +91,9 @@ if(UNIX)
   install(DIRECTORY ${LIBCURL_LIBRARY_DIR}/ DESTINATION lib
           USE_SOURCE_PERMISSIONS FILES_MATCHING PATTERN "*.so*")
 endif()
+
+
+
+
+
+
